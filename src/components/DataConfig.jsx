@@ -4,12 +4,11 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-function DataConfig(props) {
-  const [age, setAge] = useState("");
-
+function DataConfig({ categories, selectedCategorie, setSelectedCategorie }) {
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setSelectedCategorie(event.target.value);
   };
+
   return (
     <Box>
       <Typography>Filtar por categoria:</Typography>
@@ -19,13 +18,17 @@ function DataConfig(props) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={selectedCategorie}
             label="Categoría"
             onChange={handleChange}
           >
-            <MenuItem value={"prueba1"}>Prueba1</MenuItem>
-            <MenuItem value={"prueba2"}>Prueba2</MenuItem>
-            <MenuItem value={"prueba3"}>Prueba3</MenuItem>
+            <MenuItem value="Todos">Todos</MenuItem>
+            {categories.map((categorie, index) => (
+              <MenuItem key={index} value={`${categorie}`}>
+                {categorie.charAt(0).toUpperCase() +
+                  categorie.slice(1).toLowerCase()}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>
