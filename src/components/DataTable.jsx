@@ -40,7 +40,7 @@ const columns = [
   },
 ];
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable({ setCategories, selectedCategorie }) {
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -50,14 +50,27 @@ export default function StickyHeadTable() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(
-          "https://stock-api-beta.vercel.app/api/productos/"
-        );
+        let url = "https://stock-api-beta.vercel.app/api/productos/";
+        if (selectedCategorie && selectedCategorie !== "Todos") {
+          console.log(selectedCategorie);
+          url = `https://stock-api-beta.vercel.app/api/productos/categoria/${selectedCategorie}`;
+        }
+
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Error al obtener datos");
         }
         const fetchedData = await response.json();
         setRows(fetchedData);
+        const fetchedCategories = new Set(
+          fetchedData.map((item) => item.categoria)
+        );
+        const uniqueCategories = [...fetchedCategories];
+        {
+          url == "https://stock-api-beta.vercel.app/api/productos/"
+            ? setCategories(uniqueCategories)
+            : null;
+        }
       } catch (error) {
         setError(error.message);
       } finally {
@@ -66,7 +79,7 @@ export default function StickyHeadTable() {
     };
 
     fetchUsers();
-  }, []);
+  }, [selectedCategorie]);
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>Error: {error}</p>;
