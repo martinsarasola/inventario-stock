@@ -11,7 +11,6 @@ function DataConfig({ categories, selectedCategorie, setSelectedCategorie }) {
 
   return (
     <Box>
-      <Typography>Filtar por categoria:</Typography>
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Categoría</InputLabel>
