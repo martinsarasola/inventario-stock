@@ -3,12 +3,15 @@ import DataTable from "../components/DataTable";
 import DataConfig from "../components/DataConfig";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useState } from "react";
+import CreateProduct from "../components/CreateProduct";
 
 function Inventory() {
   const [categories, setCategories] = useState([]);
   const [selectedCategorie, setSelectedCategorie] = useState("Todos");
+  const [createdProduct, setCreatedProduct] = useState(false);
+  const [loading, setLoading] = useState(true);
   return (
-    <Box>
+    <Box sx={{ width: "90vw", margin: "auto" }}>
       <Box
         sx={{
           display: "flex",
@@ -30,33 +33,43 @@ function Inventory() {
         >
           Productos
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: 170,
-            mt: 1,
-            marginRight: { xs: "0px", sm: 1 },
-          }}
-        >
-          <DataConfig
-            sx={{ width: "100px" }}
-            categories={categories}
-            selectedCategorie={selectedCategorie}
-            setSelectedCategorie={setSelectedCategorie}
-          ></DataConfig>
-          <FilterAltIcon
-            fontSize="large"
-            sx={{ alignSelf: "flex-end" }}
-            color="secondary"
-          />
-        </Box>
+        {!loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: 170,
+              mt: 1,
+              marginRight: { xs: "0px", sm: 1 },
+            }}
+          >
+            <DataConfig
+              sx={{ width: "100px" }}
+              categories={categories}
+              selectedCategorie={selectedCategorie}
+              setSelectedCategorie={setSelectedCategorie}
+            ></DataConfig>
+            <FilterAltIcon
+              fontSize="large"
+              sx={{ alignSelf: "flex-end" }}
+              color="secondary"
+            />
+          </Box>
+        ) : null}
       </Box>
       <DataTable
         setCategories={setCategories}
         selectedCategorie={selectedCategorie}
+        loading={loading}
+        setLoading={setLoading}
+        createdProduct={createdProduct}
       ></DataTable>
+      <Box sx={{ mt: 3, ml: 1 }}>
+        {!loading ? (
+          <CreateProduct setCreatedProduct={setCreatedProduct}></CreateProduct>
+        ) : null}
+      </Box>
     </Box>
   );
 }

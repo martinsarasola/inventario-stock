@@ -20,6 +20,14 @@ function DataConfig({ categories, selectedCategorie, setSelectedCategorie }) {
             value={selectedCategorie}
             label="Categoría"
             onChange={handleChange}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxWidth: "200px",
+                  overflowX: "auto",
+                },
+              },
+            }}
           >
             <MenuItem value="Todos">Todos</MenuItem>
             {categories.map((categorie, index) => (
