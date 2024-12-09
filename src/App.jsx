@@ -10,6 +10,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}></Route>
           <Route path="inventory" element={<Inventory />}></Route>
+          <Route path="*">404</Route>
         </Route>
       </Routes>
     </BrowserRouter>

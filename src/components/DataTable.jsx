@@ -9,9 +9,11 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Box from "@mui/material/Box";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { CircularProgress, Typography } from "@mui/material";
 
 const columns = [
-  { id: "delete", label: "", minWidth: 0 },
+  { id: "delete", label: "", minWidth: 50, align: "left" },
   { id: "nombre", label: "Nombre", minWidth: 130 },
   { id: "descripcion", label: "Descripcion", minWidth: 100 },
   {
@@ -35,16 +37,21 @@ const columns = [
   {
     id: "fechaIngreso",
     label: "Fecha de Ingreso",
-    minWidth: 120,
-    align: "left",
+    minWidth: 100,
+    align: "center",
   },
 ];
 
-export default function StickyHeadTable({ setCategories, selectedCategorie }) {
+export default function StickyHeadTable({
+  setCategories,
+  selectedCategorie,
+  loading,
+  setLoading,
+  createdProduct,
+}) {
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -66,10 +73,8 @@ export default function StickyHeadTable({ setCategories, selectedCategorie }) {
           fetchedData.map((item) => item.categoria)
         );
         const uniqueCategories = [...fetchedCategories];
-        {
-          url == "https://stock-api-beta.vercel.app/api/productos/"
-            ? setCategories(uniqueCategories)
-            : null;
+        if (url === "https://stock-api-beta.vercel.app/api/productos/") {
+          setCategories(uniqueCategories);
         }
       } catch (error) {
         setError(error.message);
@@ -79,10 +84,22 @@ export default function StickyHeadTable({ setCategories, selectedCategorie }) {
     };
 
     fetchUsers();
-  }, [selectedCategorie]);
+  }, [selectedCategorie, createdProduct]);
 
-  if (loading) return <p>Cargando...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100vw",
+          mt: 2,
+        }}
+      >
+        <CircularProgress sx={{}} />
+      </Box>
+    );
+  if (error) return <Typography>Error: {error}</Typography>;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
