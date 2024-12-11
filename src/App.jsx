@@ -2,6 +2,7 @@ import Layout from "./components/Layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Inventory from "./pages/Inventory";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -9,8 +10,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}></Route>
-          <Route path="inventory" element={<Inventory />}></Route>
-          <Route path="*">404</Route>
+          <Route path="inventory/productos" element={<Inventory />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
