@@ -22,7 +22,7 @@ function Home(props) {
       </Typography>
       <Button
         component={Link}
-        to="/inventory"
+        to="/inventory/productos"
         sx={{ fontSize: "large", backgroundColor: "#e3f0ff", mt: 2 }}
       >
         Productos

@@ -67,7 +67,7 @@ function Layout() {
             </Button>
             <Button
               component={Link}
-              to="/inventory"
+              to="/inventory/productos"
               sx={{ justifyContent: "flex-start", fontSize: "1.2rem" }}
               onClick={handleDrawerToggle}
             >
