@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  getProducts,
+  deleteProduct,
+  updateProduct,
+} from "../services/productService";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -23,7 +28,6 @@ import Grid from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-
 import {
   initializeForm,
   resetForm,
@@ -94,19 +98,9 @@ export default function StickyHeadTable({
   }, [selectedProduct]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchProducts = async () => {
       try {
-        let url = "https://stock-api-beta.vercel.app/api/productos/";
-        if (selectedCategorie && selectedCategorie !== "Todos") {
-          console.log(selectedCategorie);
-          url = `https://stock-api-beta.vercel.app/api/productos/categoria/${selectedCategorie}`;
-        }
-
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Error al obtener datos");
-        }
-        const fetchedData = await response.json();
+        const { fetchedData, url } = await getProducts(selectedCategorie);
         setRows(fetchedData);
 
         const fetchedCategories = new Set(
@@ -124,7 +118,7 @@ export default function StickyHeadTable({
       }
     };
 
-    fetchUsers();
+    fetchProducts();
   }, [selectedCategorie, createdProduct, updatedProduct, deletedProduct]);
 
   if (loading)
@@ -197,14 +191,9 @@ export default function StickyHeadTable({
     );
     if (!confirmDelete) return;
     try {
-      const response = await fetch(
-        `https://stock-api-beta.vercel.app/api/productos/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) throw new Error("No se pudo eliminar el objeto");
+      await deleteProduct(id);
       setDeletedProduct(id);
+      setRows((prevRows) => prevRows.filter((row) => row._id !== id));
       setLoading(true);
     } catch (error) {
       console.error("Error: ", error);
@@ -226,18 +215,13 @@ export default function StickyHeadTable({
       };
 
       console.log("Objeto pasado: ", updatedProductData);
-
-      const response = await fetch(
-        `https://stock-api-beta.vercel.app/api/productos/actualizar-producto/${id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedProductData),
-        }
+      const updatedProductResponse = await updateProduct(
+        id,
+        updatedProductData
       );
       handleCloseModal();
       setLoading(true);
-      const updatedProductResponse = await response.json();
+
       console.log("producto actualizado: ", updatedProductResponse);
 
       setUpdatedProduct(updatedProductResponse);
