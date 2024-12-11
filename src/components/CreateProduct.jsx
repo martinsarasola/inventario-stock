@@ -27,7 +27,9 @@ function CreateProduct({ setCreatedProduct }) {
         nombre: formState.name.trim(),
         precio: formState.price,
         cantidad: formState.quantity,
-        categoria: formState.category.trim(),
+        categoria:
+          formState.category.trim().charAt(0).toLowerCase() +
+          formState.category.slice(1).toLowerCase(),
         descripcion: formState.description.trim(),
       };
 
@@ -69,7 +71,7 @@ function CreateProduct({ setCreatedProduct }) {
                 id="product-name"
                 type="text"
                 name="name"
-                value={formState.name}
+                value={formState.isEditing ? "" : formState.name}
                 onChange={handleChange}
                 fullWidth
               ></TextField>
@@ -82,7 +84,7 @@ function CreateProduct({ setCreatedProduct }) {
                 id="product-price"
                 type="number"
                 name="price"
-                value={formState.price}
+                value={formState.isEditing ? "" : formState.price}
                 onChange={handleChange}
                 fullWidth
               ></TextField>
@@ -95,7 +97,7 @@ function CreateProduct({ setCreatedProduct }) {
                 id="product-quantity"
                 type="number"
                 name="quantity"
-                value={formState.quantity}
+                value={formState.isEditing ? "" : formState.quantity}
                 onChange={handleChange}
                 fullWidth
               ></TextField>
@@ -108,7 +110,7 @@ function CreateProduct({ setCreatedProduct }) {
                 id="product-category"
                 type="text"
                 name="category"
-                value={formState.category}
+                value={formState.isEditing ? "" : formState.category}
                 onChange={handleChange}
                 fullWidth
               ></TextField>
@@ -121,7 +123,7 @@ function CreateProduct({ setCreatedProduct }) {
                 id="product-description"
                 type="text"
                 name="description"
-                value={formState.description}
+                value={formState.isEditing ? "" : formState.description}
                 onChange={handleChange}
                 fullWidth
                 multiline
