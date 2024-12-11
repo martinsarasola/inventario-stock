@@ -65,7 +65,7 @@ function Inventory() {
         setLoading={setLoading}
         createdProduct={createdProduct}
       ></DataTable>
-      <Box sx={{ mt: 3, ml: 1 }}>
+      <Box sx={{ mt: 3, ml: 1, mb: 1 }}>
         {!loading ? (
           <CreateProduct setCreatedProduct={setCreatedProduct}></CreateProduct>
         ) : null}
