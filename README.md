@@ -1,2 +1,2 @@
-#[BORRADOR]
+# [BORRADOR]
 # APlicación INVENTARIO DE STOCK
