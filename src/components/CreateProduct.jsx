@@ -2,7 +2,9 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   updateField,
   resetForm,
+  updateProductForm,
 } from "../features/productForm/productFormSlice";
+import { useCallback, useState } from "react";
 import { createProduct } from "../services/productService";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -10,27 +12,23 @@ import Grid from "@mui/material/Grid2";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import FormProduct from "./FormProduct";
 
 function CreateProduct({ setCreatedProduct }) {
   const formState = useSelector((state) => state.productForm);
   const dispatch = useDispatch();
+  const [localState, setLocalState] = useState(formState);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    dispatch(updateField({ field: name, value }));
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     try {
-      e.preventDefault();
       const productData = {
-        nombre: formState.name.trim(),
-        precio: formState.price,
-        cantidad: formState.quantity,
+        nombre: localState.name.trim(),
+        precio: localState.price,
+        cantidad: localState.quantity,
         categoria:
-          formState.category.trim().charAt(0).toLowerCase() +
-          formState.category.slice(1).toLowerCase(),
-        descripcion: formState.description.trim(),
+          localState.category.trim().charAt(0).toLowerCase() +
+          localState.category.slice(1).toLowerCase(),
+        descripcion: localState.description.trim(),
       };
 
       if (
@@ -44,6 +42,7 @@ function CreateProduct({ setCreatedProduct }) {
         return;
       }
       const createdProduct = await createProduct(productData);
+      dispatch(updateProductForm(localState));
       console.log("Producto creado: ", createdProduct);
       dispatch(resetForm());
       setCreatedProduct(createdProduct);
@@ -63,80 +62,12 @@ function CreateProduct({ setCreatedProduct }) {
         Crear nuevo producto
       </Typography>
       <Box sx={{ mt: 2 }}>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 12, sm: 6 }}>
-              <FormLabel htmlFor="product-name">Nombre del producto:</FormLabel>
-              <TextField
-                id="product-name"
-                type="text"
-                name="name"
-                value={formState.isEditing ? "" : formState.name}
-                onChange={handleChange}
-                fullWidth
-              ></TextField>
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
-              <FormLabel htmlFor="product-price">
-                Precio del producto:
-              </FormLabel>
-              <TextField
-                id="product-price"
-                type="number"
-                name="price"
-                value={formState.isEditing ? "" : formState.price}
-                onChange={handleChange}
-                fullWidth
-              ></TextField>
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
-              <FormLabel htmlFor="product-quantity">
-                Cantidad del producto en stock:
-              </FormLabel>
-              <TextField
-                id="product-quantity"
-                type="number"
-                name="quantity"
-                value={formState.isEditing ? "" : formState.quantity}
-                onChange={handleChange}
-                fullWidth
-              ></TextField>
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
-              <FormLabel htmlFor="product-category">
-                Categoria del producto:
-              </FormLabel>
-              <TextField
-                id="product-category"
-                type="text"
-                name="category"
-                value={formState.isEditing ? "" : formState.category}
-                onChange={handleChange}
-                fullWidth
-              ></TextField>
-            </Grid>
-            <Grid size={{ xs: 12 }}>
-              <FormLabel htmlFor="product-description">
-                Descripción del producto:
-              </FormLabel>
-              <TextField
-                id="product-description"
-                type="text"
-                name="description"
-                value={formState.isEditing ? "" : formState.description}
-                onChange={handleChange}
-                fullWidth
-                multiline
-                rows={4}
-              ></TextField>
-            </Grid>
-            <Grid item="true" xs={12}>
-              <Button type="Submit" variant="contained" color="primary">
-                Guardar Producto
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
+        <FormProduct
+          localState={localState}
+          setLocalState={setLocalState}
+          handleSubmit={handleSubmit}
+          mode="create"
+        />
       </Box>
     </Box>
   );

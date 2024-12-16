@@ -18,6 +18,9 @@ const productFormSlice = createSlice({
       const { field, value } = action.payload;
       state[field] = value;
     },
+    updateProductForm: (state, action) => {
+      return { ...state, ...action.payload };
+    },
     resetForm: () => initialState,
     initializeForm: (state, action) => {
       return { ...state, ...action.payload };
@@ -25,6 +28,6 @@ const productFormSlice = createSlice({
   },
 });
 
-export const { updateField, resetForm, initializeForm } =
+export const { updateField, resetForm, initializeForm, updateProductForm } =
   productFormSlice.actions;
 export default productFormSlice.reducer;

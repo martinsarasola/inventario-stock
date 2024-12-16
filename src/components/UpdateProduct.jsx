@@ -1,0 +1,92 @@
+import { Box, IconButton, Typography } from "@mui/material";
+import FormProduct from "./FormProduct";
+import CloseIcon from "@mui/icons-material/Close";
+
+function UpdateProduct({
+  setModalOpen,
+  updateProduct,
+  handleCloseModal,
+  setLoading,
+  setUpdatedProduct,
+  updateLocalState,
+  setUpdateLocalState,
+  selectedProduct,
+}) {
+  const handleUpdateSubmit = async (id, updateLocalState) => {
+    setModalOpen(false);
+    try {
+      console.log(updateLocalState);
+      const updatedProductData = {
+        nombre: updateLocalState.name.trim(),
+        precio: updateLocalState.price,
+        cantidad: updateLocalState.quantity,
+        categoria:
+          updateLocalState.category.trim().charAt(0).toLowerCase() +
+          updateLocalState.category.slice(1).toLowerCase(),
+        descripcion: updateLocalState.description.trim(),
+        fechaIngreso: updateLocalState.entryDate,
+      };
+
+      console.log("Objeto pasado: ", updatedProductData);
+      const updatedProductResponse = await updateProduct(
+        id,
+        updatedProductData
+      );
+      handleCloseModal();
+      setLoading(true);
+
+      console.log("producto actualizado: ", updatedProductResponse);
+
+      setUpdatedProduct(updatedProductResponse);
+    } catch (error) {
+      console.error("Error: ", error.message);
+      throw error;
+    }
+  };
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        bgcolor: "background.paper",
+        boxShadow: 24,
+        p: 4,
+        maxHeight: "84vh",
+        overflowY: { xs: "auto", md: "hidden" },
+        width: { xs: "70vw", sm: "78vw" },
+        maxWidth: { xs: "500px" },
+      }}
+    >
+      <IconButton
+        onClick={handleCloseModal}
+        sx={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          color: "secondary.main",
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
+      <Typography
+        id="modal-modal-title"
+        variant="h6"
+        component="h2"
+        sx={{ textAlign: "center", mb: 3, color: "primary.main" }}
+      >
+        Actualice el producto:
+      </Typography>
+      <FormProduct
+        handleSubmit={handleUpdateSubmit}
+        mode="editing"
+        localState={updateLocalState}
+        setLocalState={setUpdateLocalState}
+        id={selectedProduct._id}
+      />
+    </Box>
+  );
+}
+
+export default UpdateProduct;
