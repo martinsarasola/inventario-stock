@@ -1,4 +1,5 @@
 import { deleteProduct } from "../services/productService";
+import useToasts from "./toasts/useToasts";
 
 function useProductActions(
   setDeletedProduct,
@@ -9,6 +10,8 @@ function useProductActions(
   page,
   setPage
 ) {
+  const { errorToast, successToast } = useToasts();
+
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "¿Estás seguro de eliminar el producto?"
@@ -22,8 +25,10 @@ function useProductActions(
       setLoading(true);
       await deleteProduct(id);
       setDeletedProduct(id);
+      successToast("Producto eliminado.");
     } catch (error) {
       console.error("Error: ", error);
+      errorToast("No se pudo eliminar el producto. Error: " + error);
     }
   };
 
