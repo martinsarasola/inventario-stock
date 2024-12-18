@@ -57,7 +57,7 @@ function UpdateProduct({
         bgcolor: "background.paper",
         boxShadow: 24,
         p: 4,
-        maxHeight: "84vh",
+        maxHeight: { xs: "84vh", lg: "85vh" },
         overflowY: { xs: "auto", md: "hidden" },
         width: { xs: "70vw", sm: "78vw" },
         maxWidth: { xs: "500px" },
@@ -78,7 +78,11 @@ function UpdateProduct({
         id="modal-modal-title"
         variant="h6"
         component="h2"
-        sx={{ textAlign: "center", mb: 3, color: "primary.main" }}
+        sx={{
+          textAlign: "center",
+          mb: { sx: 3, lg: 1 },
+          color: "primary.main",
+        }}
       >
         Actualice el producto:
       </Typography>
