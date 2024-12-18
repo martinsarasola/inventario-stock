@@ -200,7 +200,9 @@ export default function StickyHeadTable({
         />
       )}
       {rows.length === 0 && (
-        <Typography sx={{ margin: 3 }}>No products available</Typography>
+        <Typography sx={{ margin: 3 }}>
+          No hay productos disponibles.
+        </Typography>
       )}
 
       <Popover

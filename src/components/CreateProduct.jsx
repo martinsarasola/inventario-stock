@@ -13,11 +13,14 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormProduct from "./FormProduct";
+import useToasts from "../components/toasts/useToasts";
 
 function CreateProduct({ setCreatedProduct }) {
   const formState = useSelector((state) => state.productForm);
   const dispatch = useDispatch();
   const [localState, setLocalState] = useState(formState);
+
+  const { warningToast, successToast, errorToast } = useToasts();
 
   const handleSubmit = async () => {
     try {
@@ -38,7 +41,7 @@ function CreateProduct({ setCreatedProduct }) {
         !productData.categoria ||
         !productData.descripcion
       ) {
-        alert("Todos los campos son obligatorios.");
+        warningToast("Todos los campos son obligatorios.");
         return;
       }
       const createdProduct = await createProduct(productData);
@@ -46,10 +49,10 @@ function CreateProduct({ setCreatedProduct }) {
       console.log("Producto creado: ", createdProduct);
       dispatch(resetForm());
       setCreatedProduct(createdProduct);
-      alert("Producto creado.");
+      successToast("Producto creado.");
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
-      alert("Hubo un error al crear el producto: " + error.message);
+      warningToast("Hubo un error al crear el producto: " + error.message);
     }
   };
 

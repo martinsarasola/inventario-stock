@@ -4,6 +4,7 @@ import DataConfig from "../components/DataConfig";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useState } from "react";
 import CreateProduct from "../components/CreateProduct";
+import { ToastContainer } from "react-toastify";
 
 function Inventory() {
   const [categories, setCategories] = useState([]);
@@ -70,6 +71,7 @@ function Inventory() {
           <CreateProduct setCreatedProduct={setCreatedProduct}></CreateProduct>
         ) : null}
       </Box>
+      <ToastContainer />
     </Box>
   );
 }

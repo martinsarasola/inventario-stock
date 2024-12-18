@@ -1,6 +1,7 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import FormProduct from "./FormProduct";
 import CloseIcon from "@mui/icons-material/Close";
+import useToasts from "./toasts/useToasts";
 
 function UpdateProduct({
   setModalOpen,
@@ -12,6 +13,7 @@ function UpdateProduct({
   setUpdateLocalState,
   selectedProduct,
 }) {
+  const { errorToast, successToast } = useToasts();
   const handleUpdateSubmit = async (id, updateLocalState) => {
     setModalOpen(false);
     try {
@@ -38,8 +40,10 @@ function UpdateProduct({
       console.log("producto actualizado: ", updatedProductResponse);
 
       setUpdatedProduct(updatedProductResponse);
+      successToast("Producto actualizado.");
     } catch (error) {
       console.error("Error: ", error.message);
+      errorToast("Hubo un error al actualizar el producto: " + error);
       throw error;
     }
   };
