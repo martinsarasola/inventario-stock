@@ -1,16 +1,16 @@
+const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 export const createProduct = async (productData) => {
   try {
-    const response = await fetch(
-      "https://stock-api-beta.vercel.app/api/productos/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "123456",
-        },
-        body: JSON.stringify(productData),
-      }
-    );
+    const response = await fetch(`${API_URL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: API_KEY,
+      },
+      body: JSON.stringify(productData),
+    });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -21,9 +21,9 @@ export const createProduct = async (productData) => {
 
 export const getProducts = async (selectedCategorie) => {
   try {
-    let url = "https://stock-api-beta.vercel.app/api/productos/";
+    let url = `${API_URL}/`;
     if (selectedCategorie && selectedCategorie !== "Todos") {
-      url = `https://stock-api-beta.vercel.app/api/productos/categoria/${selectedCategorie}`;
+      url = `${API_URL}/categoria/${selectedCategorie}`;
     }
 
     const response = await fetch(url);
@@ -39,12 +39,9 @@ export const getProducts = async (selectedCategorie) => {
 
 export const deleteProduct = async (id) => {
   try {
-    const response = await fetch(
-      `https://stock-api-beta.vercel.app/api/productos/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
     if (!response.ok) throw new Error("No se pudo eliminar el objeto");
   } catch (error) {
     console.error("Error: ", error);
@@ -53,14 +50,11 @@ export const deleteProduct = async (id) => {
 
 export const updateProduct = async (id, updatedProductData) => {
   try {
-    const response = await fetch(
-      `https://stock-api-beta.vercel.app/api/productos/actualizar-producto/${id}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedProductData),
-      }
-    );
+    const response = await fetch(`${API_URL}/actualizar-producto/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedProductData),
+    });
 
     const updatedProductResponse = await response.json();
     return updatedProductResponse;
