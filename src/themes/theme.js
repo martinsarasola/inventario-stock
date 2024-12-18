@@ -20,8 +20,8 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: "none", // Desactiva mayúsculas globalmente
-          fontFamily: "Arial, sans-serif", // Fuente personalizada
+          textTransform: "none",
+          fontFamily: "Arial, sans-serif",
         },
       },
     },
