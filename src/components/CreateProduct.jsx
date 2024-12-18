@@ -1,17 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
-  updateField,
   resetForm,
   updateProductForm,
 } from "../features/productForm/productFormSlice";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { createProduct } from "../services/productService";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid2";
-import FormLabel from "@mui/material/FormLabel";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import FormProduct from "./FormProduct";
 import useToasts from "../components/toasts/useToasts";
 
@@ -52,7 +47,7 @@ function CreateProduct({ setCreatedProduct }) {
       successToast("Producto creado.");
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
-      warningToast("Hubo un error al crear el producto: " + error.message);
+      errorToast("Hubo un error al crear el producto: " + error.message);
     }
   };
 
