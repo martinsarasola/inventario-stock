@@ -73,12 +73,11 @@ export default function StickyHeadTable({
   ];
 
   useEffect(() => {
-    // Si la página actual está vacía y hay páginas previas, mueve a la página anterior
     if (
       rows.length === 0 ||
       (page > Math.floor(rows.length / rowsPerPage) && page > 0)
     ) {
-      setPage(Math.max(0, page - 1)); // Cambia a la página anterior, o a la primera si es la página 0
+      setPage(Math.max(0, page - 1));
     }
   }, [rows, page, rowsPerPage]);
 
