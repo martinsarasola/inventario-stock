@@ -72,15 +72,6 @@ export default function StickyHeadTable({
     ...(isLargeScreen ? [{ id: "delete", label: "", align: "center" }] : []),
   ];
 
-  useEffect(() => {
-    if (
-      rows.length === 0 ||
-      (page > Math.floor(rows.length / rowsPerPage) && page > 0)
-    ) {
-      setPage(Math.max(0, page - 1));
-    }
-  }, [rows, page, rowsPerPage]);
-
   const formState = useSelector((state) => state.productForm);
   const dispatch = useDispatch();
   const [updateLocalState, setUpdateLocalState] = useState(formState);
