@@ -2,13 +2,13 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   resetForm,
   updateProductForm,
-} from "../features/productForm/productFormSlice";
+} from "../../../features/productForm/productFormSlice";
 import { useState } from "react";
-import { createProduct } from "../services/productService";
+import { createProduct } from "../../../services/productService";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import FormProduct from "./FormProduct";
-import useToasts from "../components/toasts/useToasts";
+import FormProduct from "../../common/FormProduct";
+import useToasts from "../../ui/toasts/useToasts";
 
 function CreateProduct({ setCreatedProduct }) {
   const formState = useSelector((state) => state.productForm);

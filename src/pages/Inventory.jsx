@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import DataTable from "../components/DataTable";
-import DataConfig from "../components/DataConfig";
+import DataTable from "../components/products/list/DataTable";
+import DataConfig from "../components/common/DataConfig";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useState } from "react";
-import CreateProduct from "../components/CreateProduct";
+import CreateProduct from "../components/products/create/CreateProduct";
 import { ToastContainer } from "react-toastify";
 
 function Inventory() {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateProduct } from "../services/productService";
+import { updateProduct } from "../../../services/productService";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -15,12 +15,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {
   initializeForm,
   resetForm,
-} from "../features/productForm/productFormSlice";
+} from "../../../features/productForm/productFormSlice";
 import TableHeadComponent from "./TableHeadComponent";
 import TableBodyComponent from "./TableBodyComponent";
-import useFetchProducts from "./useFetchProducts";
-import useProductActions from "./useProductActions";
-import UpdateProduct from "./UpdateProduct";
+import useFetchProducts from "../../hooks/useFetchProducts";
+import useProductActions from "../../hooks/useProductActions";
+import UpdateProduct from "../update/UpdateProduct";
 
 export default function StickyHeadTable({
   setCategories,
@@ -44,7 +44,7 @@ export default function StickyHeadTable({
   const columns = [
     { id: "options", label: "", minWidth: 10, align: "center" },
     { id: "nombre", label: "Nombre", minWidth: 130 },
-    { id: "descripcion", label: "Descripcion", minWidth: 100 },
+    { id: "descripcion", label: "Descripción", minWidth: 100 },
     {
       id: "precio",
       label: "Precio",
@@ -59,7 +59,7 @@ export default function StickyHeadTable({
     },
     {
       id: "categoria",
-      label: "Categoria",
+      label: "Categoría",
       minWidth: 90,
       align: "left",
     },
@@ -90,6 +90,14 @@ export default function StickyHeadTable({
     updatedProduct,
     deletedProduct
   );
+
+  useEffect(() => {
+    setPage(0);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [selectedCategorie]);
 
   const { handleDelete } = useProductActions(
     setDeletedProduct,
@@ -184,7 +192,10 @@ export default function StickyHeadTable({
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
-          page={Math.min(page, Math.floor(rows.length / rowsPerPage))}
+          page={Math.max(
+            0,
+            Math.min(page, Math.ceil(rows.length / rowsPerPage) - 1)
+          )}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />

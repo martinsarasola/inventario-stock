@@ -31,6 +31,7 @@ export const getProducts = async (selectedCategorie) => {
       throw new Error("Error al obtener datos");
     }
     const fetchedData = await response.json();
+    console.log(fetchedData);
     return { fetchedData, url };
   } catch (error) {
     throw new Error(error.message);

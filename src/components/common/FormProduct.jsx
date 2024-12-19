@@ -61,7 +61,7 @@ function FormProduct({ handleSubmit, mode, localState, setLocalState, id }) {
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
           <FormLabel htmlFor="product-category">
-            Categoria del producto:
+            Categoría del producto:
           </FormLabel>
           <TextField
             id="product-category"
