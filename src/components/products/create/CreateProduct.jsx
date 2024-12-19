@@ -41,7 +41,6 @@ function CreateProduct({ setCreatedProduct }) {
       }
       const createdProduct = await createProduct(productData);
       dispatch(updateProductForm(localState));
-      console.log("Producto creado: ", createdProduct);
       dispatch(resetForm());
       setCreatedProduct(createdProduct);
       successToast("Producto creado.");
