@@ -144,7 +144,6 @@ export default function StickyHeadTable({
       })
     );
     setModalOpen(true);
-    console.log(selectedProduct);
   };
 
   const handleCloseModal = () => {

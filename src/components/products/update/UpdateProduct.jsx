@@ -17,7 +17,6 @@ function UpdateProduct({
   const handleUpdateSubmit = async (id, updateLocalState) => {
     setModalOpen(false);
     try {
-      console.log(updateLocalState);
       const updatedProductData = {
         nombre: updateLocalState.name.trim(),
         precio: updateLocalState.price,
@@ -29,16 +28,12 @@ function UpdateProduct({
         fechaIngreso: updateLocalState.entryDate,
       };
 
-      console.log("Objeto pasado: ", updatedProductData);
       const updatedProductResponse = await updateProduct(
         id,
         updatedProductData
       );
       handleCloseModal();
       setLoading(true);
-
-      console.log("producto actualizado: ", updatedProductResponse);
-
       setUpdatedProduct(updatedProductResponse);
       successToast("Producto actualizado.");
     } catch (error) {

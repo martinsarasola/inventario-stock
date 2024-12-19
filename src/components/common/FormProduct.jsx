@@ -8,7 +8,6 @@ function FormProduct({ handleSubmit, mode, localState, setLocalState, id }) {
       ...prevState,
       [name]: value,
     }));
-    console.log(localState);
   };
 
   return (
