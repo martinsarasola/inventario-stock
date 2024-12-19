@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getProducts } from "../services/productService";
+import { getProducts } from "../../services/productService";
 
 function useFetchProducts(
   selectedCategorie,

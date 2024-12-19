@@ -1,5 +1,5 @@
-import { deleteProduct } from "../services/productService";
-import useToasts from "./toasts/useToasts";
+import { deleteProduct } from "../../services/productService";
+import useToasts from "../ui/toasts/useToasts";
 
 function useProductActions(
   setDeletedProduct,

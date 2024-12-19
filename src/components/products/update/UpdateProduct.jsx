@@ -1,7 +1,7 @@
 import { Box, IconButton, Typography } from "@mui/material";
-import FormProduct from "./FormProduct";
+import FormProduct from "../../common/FormProduct";
 import CloseIcon from "@mui/icons-material/Close";
-import useToasts from "./toasts/useToasts";
+import useToasts from "../../ui/toasts/useToasts";
 
 function UpdateProduct({
   setModalOpen,
